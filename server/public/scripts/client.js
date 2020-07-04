@@ -1,5 +1,5 @@
 $(document).ready(init);
 
 function init() {
-  //code goes here
+  console.log('Document ready.');
 }
