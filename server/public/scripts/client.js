@@ -2,10 +2,27 @@ $(document).ready(init);
 
 function init() {
   console.log('Document ready.');
+  $('.js-btn-submit').on('click', submitMath);
   //get equation history
   getHistory();
 }
+//Event Handlers
+function submitMath(event) {
+  let num1 = $('.js-input-mathValue1').val();
+  let num2 = $('.js-input-mathValue2').val();
 
+  num1 = parseInt(num1);
+  num2 = parseInt(num2);
+
+  const mathEquation = {
+    mathValue1: num1,
+    mathValue2: num2,
+  };
+
+  console.log('Submit Math', mathEquation);
+}
+
+//API Calls
 function getHistory() {
   //In jquery, it's 'bling dot ajax' → $.ajax() → for ajax "call" or "request." It's a function that accepts a parameter with properties of "method" and url.
   $.ajax({
@@ -21,9 +38,10 @@ function getHistory() {
     });
 }
 
+//View Updates
 function render(history) {
   const $answer = $('.js-answer');
-  const $history = $('.js-history');
+  const $historyList = $('.js-history-list');
   const lastIndex = history.length - 1;
   //wanting to append last index → this "history.length - 1" gives me the last item in the array always, and I'm storing it in a variable above → lastIndex
 
@@ -39,7 +57,7 @@ function render(history) {
       operatorType = '*';
     }
 
-    $history.append(`
+    $historyList.append(`
     <li>
     ${data.mathValue1}
     ${data.operatorType}

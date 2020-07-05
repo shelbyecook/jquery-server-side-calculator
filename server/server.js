@@ -1,21 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+
 const PORT = 5000;
 
 // This must be added before GET & POST routes.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); //allows us to test on Postman
 
-//data structure
-const history = [
-  // {
-  //   mathValue1: '',
-  //   mathValue2: '',
-  //   mathOperator: '',
-  //   answer: ''
-  // }
-];
+//This serves the static files.
+app.use(express.static('server/public'));
+
+const history = [];
 
 //GET of equation history tested on Postman
 app.get('/equation-history', (req, res) => {
@@ -57,9 +53,6 @@ app.post('/equation', (req, res) => {
   res.sendStatus(201); //(Created)
 });
 
-//This serves the static files.
-app.use(express.static('server/public'));
-
-app.listen(5000, () => {
+app.listen(PORT, () => {
   console.log(`Listening on port 5000!`);
 });
