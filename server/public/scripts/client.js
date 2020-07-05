@@ -1,8 +1,11 @@
+let mathOperatorType = null;
+
 $(document).ready(init);
 
 function init() {
-  console.log('Document ready.');
   $('.js-btn-submit').on('click', submitMath);
+  $('.js-btn-mathOperator').on('click', mathOperator);
+
   //get equation history
   getHistory();
 }
@@ -17,9 +20,15 @@ function submitMath(event) {
   const mathEquation = {
     mathValue1: num1,
     mathValue2: num2,
+    mathOperator: mathOperatorType,
   };
 
   console.log('Submit Math', mathEquation);
+}
+
+function mathOperator(event) {
+  mathOperatorType = $(this).data('operator'); //"this" is button that was clicked
+  console.log('Click Operator: ', mathOperatorType);
 }
 
 //API Calls
