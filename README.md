@@ -24,7 +24,7 @@ The following may be necessary:
 Begin, by either forking the repository, cloning the repository, and/or downloading the application zip file.
 
 ### The following shows the contents provided:
-<img src="images/contents" alt="Contents">
+<img src="images/contents.png" alt="Contents">
 
 ## Usage
 <ol>
