@@ -99,13 +99,13 @@ function render(listOfMathObjects) {
     }
 
     $historyList.append(`
-      <li>
+      <ul><li>
         ${data.mathValue1}
         ${thisOperator}
         ${data.mathValue2}
         =
         ${data.answer}
-      </li>
+      </li></ul>
       `);
   }
 }

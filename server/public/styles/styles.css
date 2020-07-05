@@ -1,8 +1,16 @@
 body {
-  background-color: #ffe1de;
-  text-align: center;
+  background-color: white;
+  padding-left: 40px;
+  text-align: left;
+}
+.js-answer {
+  padding-left: 0px;
 }
 .jumbotron-fluid {
   font-family: Helvetica;
-  text-align: center;
+  text-align: left;
+}
+ul {
+  list-style-type: none;
+  padding-left: 0px;
 }
