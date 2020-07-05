@@ -74,7 +74,7 @@ function clearInputs(event) {
   $('.js-input-mathValue2').val('');
 }
 
-//RENDERING / APPENDING TO THE DOM
+//RENDERING
 function render(listOfMathObjects) {
   let $answer = $('.js-answer');
   let $historyList = $('.js-history-list');
