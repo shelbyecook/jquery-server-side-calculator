@@ -78,14 +78,13 @@ function clearInputs(event) {
 function render(listOfMathObjects) {
   let $answer = $('.js-answer');
   let $historyList = $('.js-history-list');
-  let lastIndex = listOfMathObjects.length - 1;
 
   //EMPTY
   $answer.empty();
   $historyList.empty();
 
   //APPEND
-  $answer.append(listOfMathObjects[lastIndex].answer);
+  $answer.append(listOfMathObjects[listOfMathObjects.length - 1].answer);
 
   for (let data of listOfMathObjects) {
     let thisOperator = null;
