@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-
 const PORT = 5000;
+let history = [];
 
 //This must be added before GET & POST routes.
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -11,9 +11,12 @@ app.use(bodyParser.json()); //allows us to test on Postman
 //Serve the static files
 app.use(express.static('server/public'));
 
-const history = [];
+app.get('/equation', (req, res) => {
+  res.send(history);
+});
 
-app.get('/equation-history', (req, res) => {
+app.delete('/equation', (req, res) => {
+  history = [];
   res.send(history);
 });
 

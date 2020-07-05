@@ -1,5 +1,6 @@
-//DEFINING GLOBAL VARIABLE
+//DEFINING GLOBAL VARIABLES
 let globalOperator = null;
+let equation = [];
 
 //INITIALIZING DOC + ACTIONS PERFORMED WHEN PAGE LOADS
 $(document).ready(init);
@@ -7,11 +8,12 @@ $(document).ready(init);
 function init() {
   $('.js-btn-submit').on('click', clickedSubmitMath);
   $('.js-btn-mathOperator').on('click', clickedMathOperator);
+  $('.js-btn-clear').on('click', deleteHistory);
 
   getHistory();
 }
 
-//EVENT HANDLERS
+//EVENT HANDLERS + AJAX REQUESTS
 function clickedSubmitMath(event) {
   let num1 = $('.js-input-mathValue1').val();
   let num2 = $('.js-input-mathValue2').val();
@@ -19,65 +21,74 @@ function clickedSubmitMath(event) {
   num1 = parseInt(num1);
   num2 = parseInt(num2);
 
-  const equation = {
+  let newEquation = {
     mathValue1: num1,
     mathValue2: num2,
     mathOperatorType: globalOperator,
   };
 
-  postEquation(equation);
+  if (
+    newEquation.mathValue1 === '' ||
+    newEquation.mathValue2 === '' ||
+    newEquation.mathOperatorType === ''
+  ) {
+    alert("Oops! We're having trouble with this equation.");
+    return;
+  }
+
+  $.ajax({
+    type: 'POST',
+    url: '/equation',
+    data: newEquation,
+  }).then(function (response) {
+    getHistory();
+  });
+  equation.push(newEquation);
+  clearInputs();
+}
+
+function deleteHistory(event) {
+  $.ajax({
+    type: 'DELETE',
+    url: '/equation',
+  }).then(function (response) {
+    render(response);
+  });
+}
+
+function getHistory(event) {
+  $.ajax({
+    type: 'GET',
+    url: '/equation',
+  }).then(function (response) {
+    render(response);
+  });
 }
 
 function clickedMathOperator(event) {
   globalOperator = $(this).data('operator'); //"this" is button that was clicked
 }
 
-//AJAX REQUESTS
-function getHistory() {
-  $.ajax({
-    method: 'GET',
-    url: '/equation-history',
-  })
-    .then(function (response) {
-      render(response);
-    })
-    .catch(function (err) {
-      alert('We had trouble with your math.');
-    });
+function clearInputs(event) {
+  $('.js-input-mathValue1').val('');
+  $('.js-input-mathValue2').val('');
 }
 
-function postEquation(mathEquationObject) {
-  if (mathEquationObject.MathOperatorType === null) {
-    return false;
-  }
-  $.ajax({
-    method: 'POST',
-    url: '/equation',
-    data: mathEquationObject,
-  })
-    .then(function (response) {
-      getHistory();
-    })
-    .catch(function (err) {
-      alert('We had trouble processing your equation.');
-    });
-}
+//RENDERING / APPENDING TO THE DOM
+function render(listOfMathObjects) {
+  let $answer = $('.js-answer');
+  let $historyList = $('.js-history-list');
+  let lastIndex = listOfMathObjects.length - 1;
 
-//RENDERING + APPENDING TO THE DOM
-function render(history) {
-  const $answer = $('.js-answer');
-  const $historyList = $('.js-history-list');
-  const lastIndex = history.length - 1;
-
-  //EMPTYING HTML CONTENT
+  //EMPTY
   $answer.empty();
   $historyList.empty();
 
-  $answer.append(history[lastIndex].answer);
+  //APPEND
+  $answer.append(listOfMathObjects[lastIndex].answer);
 
-  for (let data of history) {
+  for (let data of listOfMathObjects) {
     let thisOperator = null;
-
     if (data.mathOperatorType === 'add') {
       thisOperator = '+';
     } else if (data.mathOperatorType === 'subtract') {
@@ -89,13 +100,13 @@ function render(history) {
     }
 
     $historyList.append(`
-    <li>
-    ${data.mathValue1}
-    ${thisOperator}
-    ${data.mathValue2}
-    =
-    ${data.answer}
-    </li>
-    `);
+      <li>
+        ${data.mathValue1}
+        ${thisOperator}
+        ${data.mathValue2}
+        =
+        ${data.answer}
+      </li>
+      `);
   }
 }
