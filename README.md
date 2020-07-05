@@ -8,5 +8,5 @@ The following application was constructed using Node, Express, JavaScript, jQuer
 
 As a calculator, the app allows users to enter two values and choose a binary operation.
 
-### Screen Shot
+## Screen Shot
 <img src="images/calculator_example.png" alt="Example">
