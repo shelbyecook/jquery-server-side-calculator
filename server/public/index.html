@@ -11,15 +11,13 @@
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
   </head>
   <body>
-    <!-- title of assignment -->
     <h1>Server Side Calculator</h1>
-    <!-- space for inputs and buttons in order of how they'd be used by user -->
-    <!-- classes for math operators can be same if data attribute is assigned to store info -->
+
     <div>
       <input
         type="number"
         id="firstNumber"
-        placeholder="Number"
+        placeholder="Enter Number"
         class="js-input-mathValue1"
       />
       <button class="js-btn-mathOperator" data-operator="add">+</button>
@@ -29,17 +27,14 @@
       <input
         type="number"
         id="secondNumber"
-        placeholder="Number"
+        placeholder="Enter Number"
         class="js-input-mathValue2"
       />
       <button class="js-btn-submit">=</button>
       <button class="js-btn-clear">CLEAR</button>
     </div>
-    <!-- creating space for answer using h2 -->
 
     <h2 class="js-answer"></h2>
-
-    <!-- creating space for history using unordered list -->
 
     <ul class="js-history-list"></ul>
   </body>
