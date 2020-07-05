@@ -21,23 +21,23 @@ app.get('/equation-history', (req, res) => {
 //Post that accepts an object for an equation
 app.post('/equation', (req, res) => {
   //retrieve the response of data
-  const equationObject = req.body;
-  const mathValue1AsInt = parseInt(equationObject.mathValue1); //turns strings into numbers
-  const mathValue2AsInt = parseInt(equationObject.mathValue2); //turns strings into numbers
+  const mathEquationObject = req.body;
+  const mathValue1AsInt = parseInt(mathEquationObject.mathValue1); //turns strings into numbers
+  const mathValue2AsInt = parseInt(mathEquationObject.mathValue2); //turns strings into numbers
   let answer = 0; //stores the value of 'mathValue1AsInt + mathValue2AsInt'
 
   //do the math equation
   //checks for operator and does corresponding equation
-  if (equationObject.mathOperator === 'add') {
+  if (mathEquationObject.mathOperatorType === 'add') {
     // equationObject.mathValue1 + equationObject.mathValue2; → now use the parseInt values
     answer = mathValue1AsInt + mathValue2AsInt;
-  } else if (equationObject.mathOperator === 'subtract') {
+  } else if (mathEquationObject.mathOperatorType === 'subtract') {
     // equationObject.mathValue1 - equationObject.mathValue2; → now use the parseInt values
     answer = mathValue1AsInt - mathValue2AsInt;
-  } else if (equationObject.mathOperator === 'divide') {
+  } else if (mathEquationObject.mathOperatorType === 'divide') {
     // equationObject.mathValue1 / equationObject.mathValue2; → now use the parseInt values
     answer = mathValue1AsInt / mathValue2AsInt;
-  } else if (equationObject.mathOperator === 'multiply') {
+  } else if (mathEquationObject.mathOperatorType === 'multiply') {
     // equationObject.mathValue1 * equationObject.mathValue2; → now use the parseInt values
     answer = mathValue1AsInt * mathValue2AsInt;
   }
@@ -45,7 +45,7 @@ app.post('/equation', (req, res) => {
   history.push({
     mathValue1: mathValue1AsInt,
     mathValue2: mathValue2AsInt,
-    mathOperator: equationObject.mathOperator,
+    mathOperatorType: mathEquationObject.mathOperatorType,
     answer: answer,
   });
   //reply back to client ajax request with message: "Okay!" or "Added!"
